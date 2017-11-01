@@ -1,0 +1,147 @@
+
+
+<div class="row">
+  <div class="col-md-6">
+    <a [routerLink]="['/client/'+id]" href="#" class="btn btn-link"><i class="fa fa-arrow-circle-o-left"></i> Back To Details</a>
+  </div>
+  <div class="col-md-6">
+    
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    Edit Client
+  </div>
+  <div class="card-block">
+    <form novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+       
+        <div class="form-group">
+            <label for="idUser">ID User</label>
+            <input 
+              type="text"
+              class="form-control"
+              [(ngModel)]="client.idUser"
+              name="idUser"
+              id="idUser"
+            >
+        </div>
+
+      <div class="form-group">
+        <label for="firstname">First Name</label>
+        <input 
+          type="text"
+          class="form-control"
+          [(ngModel)]="client.firstname"
+          name="firstname"
+          id="firstname"
+          #clientFirstName="ngModel"
+          minlength="2"
+          required
+        >
+        <div *ngIf="clientFirstName.errors?.required && clientFirstName.touched" class="alert alert-danger">
+          First name is required
+        </div>
+        <div *ngIf="clientFirstName.errors?.minlength && clientFirstName.touched" class="alert alert-danger">
+          Must be at least 2 characters
+        </div>
+      </div>
+     
+      <div class="form-group">
+        <label for="secondname">Last Name</label>
+        <input 
+          type="text"
+          class="form-control"
+          [(ngModel)]="client.secondname"
+          name="secondname"
+          id="secondname"
+          #clientLastName="ngModel"
+          minlength="2"
+          required
+        >
+        <div *ngIf="clientLastName.errors?.required && clientLastName.touched" class="alert alert-danger">
+          Last name is required
+        </div>
+        <div *ngIf="clientLastName.errors?.minlength && clientLastName.touched" class="alert alert-danger">
+          Must be at least 2 characters
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="username">User Name</label>
+        <input 
+          type="text"
+          class="form-control"
+          [(ngModel)]="client.username"
+          name="username"
+          id="username"
+          #clientUserName="ngModel"
+          minlength="2"
+          required
+        >
+        <div *ngIf="clientUserName.errors?.required && clientUserName.touched" class="alert alert-danger">
+          User Name required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input 
+          type="password"
+          class="form-control"
+          [(ngModel)]="client.password"
+          name="password"
+          id="password"
+          #clientPassword="ngModel"
+          minlength="8"
+          required
+        >  
+        <div *ngIf="clientPassword.errors?.required && clientPassword.touched" class="alert alert-danger">
+          Password required
+        </div>  
+      </div>
+
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input 
+          type="password"
+          class="form-control"
+          [(ngModel)]="client.password"
+          name="confirmPassword"
+          id="confirmPassword"
+          #confirmPassword="ngModel"
+          minlength="8"
+          required
+        >  
+        <div *ngIf="confirmPassword.errors?.required && confirmPassword.touched" class="alert alert-danger">
+          Confirm Password required
+        </div>  
+      </div>
+
+      <div class="form-group">
+        <label for="idAuth">Profile</label>
+        <input 
+          type="text"
+          class="form-control"
+          [(ngModel)]="client.idAuth"
+          name="idAuth"
+          id="idAuth"
+        >
+      </div>
+      
+
+      <div class="form-group">
+        <label for="status">Status</label>
+        <input 
+          type="text"
+          class="form-control"
+          [(ngModel)]="client.status"
+          name="status"
+          id="status"
+        >
+      </div>
+
+      <input type="submit" class="btn btn-primary btn-block" value="Submit">
+    </form>
+  </div>
+</div>
