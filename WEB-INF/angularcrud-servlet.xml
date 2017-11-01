@@ -1,0 +1,90 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd 
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd ">
+
+
+    
+        <mvc:annotation-driven />
+        <!-- Scan the JavaConfig -->
+	<context:component-scan base-package="com.projects.angularcrud.config" />
+        
+        <mvc:resources location="pdfs" mapping="/pdfs/**" />
+        
+       <bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+	<property name="defaultLocale" value="en_US"/>
+       </bean>
+       
+       <!--ovo je setovanje za hendlovanje svih json i xml requestova!!!-->
+       <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+           <property name="order" value="1"></property>
+           <property name="contentNegotiationManager">
+                <bean class="org.springframework.web.accept.ContentNegotiationManager">
+                    <constructor-arg>
+                        <bean class="org.springframework.web.accept.PathExtensionContentNegotiationStrategy">
+                            <constructor-arg>
+                                <map>
+                                    <entry key="json" value="application/json"></entry>
+                                    <entry key="xml"  value="application/xml"></entry>
+                                </map>
+
+                            </constructor-arg>
+                        </bean>
+                    </constructor-arg>
+                </bean>
+            </property>
+            
+            <property name="defaultViews">
+                <list>
+                        <bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+                        <bean class="org.springframework.web.servlet.view.xml.MarshallingView">
+                            <constructor-arg>
+                                <bean class="org.springframework.oxm.xstream.XStreamMarshaller">
+                                    <property name="autodetectAnnotations" value="true"/>
+                                </bean>
+                            </constructor-arg>
+                        </bean>
+                </list>
+            </property>
+       </bean>
+       
+       <!--ovo je setovanje za hendlovanje svih json i xml requestova!!!-->
+       
+       <mvc:interceptors>
+           <bean id="LocaleResolver" 
+                 class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+           <property name="paramName" value="Language11"/> 
+           </bean> 
+       </mvc:interceptors>
+       
+<!--       <bean id="userValidator" class="com.projects.halkom.validation.UserFormValidator" />
+       <bean id="emailValidator" class="com.projects.halkom.validation.EmailValidator" />-->
+
+       <bean id="messageSource"
+		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="classpath:messages" />
+		<property name="defaultEncoding" value="UTF-8" />
+       </bean>
+
+ 
+        <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+            <property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+            <!--<property name="url" value="jdbc:oracle:thin:@sgs-report:14400:report" />-->
+            <property name="url" value="jdbc:oracle:thin:@sgs-dsdeltatest5:1521:rtrpt" />
+            <property name="username" value="SGS_PIO"/>
+            <property name="password" value="6ww!IL!J5~qU1234"/>
+        </bean>
+        
+        <bean class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate" id="namedParameterJdbcTemplate">   
+            <constructor-arg ref="dataSource"/>
+        </bean> 
+
+
+</beans>
